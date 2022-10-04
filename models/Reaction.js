@@ -33,12 +33,6 @@ const reactionSchema = new Schema(
   }
 );
 
-userSchema
-  .virtual('friendCount')
-  .get(function () {
-    return this.friends.length;
-  });
-
 function formatDate(date) {
     return date.toLocaleString();
   };
