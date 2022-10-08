@@ -30,7 +30,7 @@ This project is intended as a homework assignment for class.  Questions, comment
 
 > Video demoing functionality of Social Network API routes.
 
-./
+https://user-images.githubusercontent.com/103389448/194690149-56152a56-eff3-498d-a0d4-776b7ef8a96d.mp4
 
 ---
 
