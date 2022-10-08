@@ -1,4 +1,5 @@
 const router = require('express').Router();
+// Pulling information on how to handle routes from controller file
 const {
     getUsers,
     getSingleUser,

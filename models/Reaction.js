@@ -1,8 +1,6 @@
 const { Schema, Types } = require('mongoose');
 
-console.log(formatDate(Date.now));
-
-
+// Schema to create Reaction model
 const reactionSchema = new Schema(
   {
     reactionId: {
@@ -34,6 +32,7 @@ const reactionSchema = new Schema(
   }
 );
 
+// When data is pulled, convert created date to readable string
 function formatDate(date) {
     return date.toLocaleString();
   };

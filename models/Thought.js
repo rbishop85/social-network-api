@@ -31,19 +31,19 @@ const thoughtSchema = new Schema(
   }
 );
 
+// Creates a reactionCount value when data is displayed
 thoughtSchema
   .virtual('reactionCount')
   .get(function () {
     return this.reactions.length;
   });
 
+  // When data is pulled, convert created date to readable string
 function formatDate(date) {
     return date.toLocaleString();
-  };
+  }; 
 
-  
-
-// Initialize our User model
+// Initialize our Thought model
 const Thought = model('Thought', thoughtSchema);
 
 module.exports = Thought;

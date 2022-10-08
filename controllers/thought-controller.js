@@ -1,6 +1,4 @@
-
-
-    const { Thought, Reaction, User } = require('../models');
+const { Thought, Reaction, User } = require('../models');
 
 module.exports = {
   // Get All Thoughts
@@ -9,7 +7,7 @@ module.exports = {
       .then((thoughts) => res.json(thoughts))
       .catch((err) => res.status(500).json(err));
   },
-  // Get Single Thought
+  // Get Single Thought using included ID
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
       .then((thought) =>
@@ -21,8 +19,10 @@ module.exports = {
   },
   // Create Thought
   createThought(req, res) {
+    // Use data included in request's body to create the new thought
     Thought.create(req.body)
     .then((thought) => {
+      // Find assigned user and add thought to their thoughts list
       return User.findOneAndUpdate(
         { username: req.body.username },
         { $addToSet: { thoughts: thought._id } },
@@ -40,11 +40,12 @@ module.exports = {
       console.log(err);
       res.status(500).json(err);
     });
-},
-  // Update Thought 
+  },
+  // Update Thought using included ID
   updateThought(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
+      // Use data included in request's body to update the thought
       { $set: req.body },
       { runValidators: true, new: true }
     )
@@ -64,6 +65,7 @@ module.exports = {
     .then((thought) =>
       !thought
         ? res.status(404).json({ message: 'No thought with that ID!' })
+        // Find user associated to thought and remove thought from their thoughts list
         : User.findOneAndUpdate(
             { thoughts: req.params.thoughtId },
             { $pull: { thoughts: req.params.thoughtId } },
@@ -78,8 +80,8 @@ module.exports = {
         : res.json({ message: 'Thought successfully deleted!' })
     )
     .catch((err) => res.status(500).json(err));
-},
-  // Add Reaction
+  },
+  // Add Reaction using data included in request body
   addReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
